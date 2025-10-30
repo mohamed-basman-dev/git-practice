@@ -1,2 +1,5 @@
 Demo test to check the stages of git such as working area, staging area, local repository, remote repository and git push origin (local to remote) 
 This line write to check the git pull origin main/master (remote to local)
+line A
+line B
+line C
