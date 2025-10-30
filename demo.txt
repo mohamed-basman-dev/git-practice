@@ -1,0 +1,1 @@
+Demo test to check the stages of git such as working area, staging area, local repository and remote repository
