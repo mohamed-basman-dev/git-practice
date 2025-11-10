@@ -20,7 +20,7 @@ git is a version control system that tracks changes in code over time. It helps 
 1. Open terminal
 2. command git config --global user.name "Your username same as remote"
 3. command git config --global user.email "Your email same as remote"
-4. command git config --global --list ( For checking the datas whether stored corrrectly or not)
+4. command git config --global --list ( For checking the datas)
 # Create directory in local
 1. open terminal or git bash
 2. Place the directory as per your need e.g /c/Users/username/ GitPractice  
@@ -30,6 +30,7 @@ git is a version control system that tracks changes in code over time. It helps 
 1. Create repository in remote e.g git-practice
 2. Copy the repo link
 # Clone the remote repository
+// clone creates a full local copy of a remote repository, including all files, branches and history
 1. command git clone Repo link
 2. command ls - to check the list of files in pwd and whethere it's correctly created or not
 3. command echo " To check stages of git, pull and push between local and remote" >> demo.txt - create sample text file
@@ -52,6 +53,7 @@ git is a version control system that tracks changes in code over time. It helps 
 11. git config --global --list // to list out the git configuration file
 12. git config global -e // to open configure file
 #Joining an existing project
+// fork is a personal copy of someone else's repository,letting you freely experiment and contribute changes back through pull requests
 1. fork the project in git remote
 2. copy your forked project url
 3. clone <url>
@@ -67,6 +69,7 @@ git is a version control system that tracks changes in code over time. It helps 
 6. git log --since="3 days ago" // to get last 3 days commit history only
 7. git log --file_name // to know about particular source commit history
 # Alias
+// It is a custome shortcut for long or frequently used git commands to save time and typing
 1. git config --global alias.alias_name "log --oneline --graph --decorate"
 2. git alias_name // call long command with short word
 # Igonore unwanted files
@@ -90,6 +93,7 @@ git is a version control system that tracks changes in code over time. It helps 
 1. nano eg.txt // create and add
 2. git rm eg.txt // to delete file, after commit must
 # Visual merge/dif tool
+// It helps compare and solve code differences side by side using a graphical interface for easier conflict resolution e.g p4merge
 ##Download p4 merge
 1. Download and run p4 visual merge tool
 2. Set the p4 merge address in system variables
@@ -132,6 +136,7 @@ git is a version control system that tracks changes in code over time. It helps 
 ### Comparing between local and remote master branches
 1. git diff master origin/master
 # Branching and merging
+// branching create separate workspace for new work without affecting main; merge combines changes from one branch into another
 1. git branch // list only local branches
 2. git branch -a // list local and remote branches
 3. git branch branch_name // to create new branch
@@ -140,21 +145,25 @@ git is a version control system that tracks changes in code over time. It helps 
 6. git branch -d branch_name // to delete branch
 7. git checkout -b branch_name // to create new branch and switch to it
 ## Fast forward merges
+// Simply moves the branch pointer ahead because no new commits exist on the target branch
 1. git checkout -b example
 2. nano index.html // add and commit must
 3. git checkout main/master
 4. git merge example
 ## Disable fast forward merges
+// forcing git to create a merge commit even if a fast-forward is possible - preserving the branch history
 1. git checkout -b example
 2. nano index.html // add and commit must
 3. git checkout main/master
 4. git merge example --no-ff
 ## Automatic merges
+// It happen when branches have no conflicts and git merges them directly and records it with the given commit message
 1. git checkout -b example
 2. nano index.html // add and commit must
 3. git checkout main/master
 4. git merge example -m "put commit message here"
 ## Conflicting merges and resolution
+// conflicting merge occurs when two branches change the same part of file
 1. git checkout -b example
 2. nano sample.txt // add some contents
 3. git commit -am "put commit message here"
@@ -169,3 +178,41 @@ git is a version control system that tracks changes in code over time. It helps 
 12. mate .gitignore
 13. *.orig // to skip these extension files
 14. git add and commit .gitignore
+# Cherrypick
+// copy specific commit fromone branch and apply it to another branch
+1. git checkout -b developers
+2. echo "temporary debug: test line" >> demo.txt
+3. git add demo.txt
+4. git commit -m "fix: add debug line for login issue"
+5. git log --oneline // copy last commit id
+6. git checkout main
+7. git checkout -b bugfix/login-fix
+8. git cherrypick -x commit_id // It do not copy entire code to another file need to fix. It just edit the conflict code
+# Revert a commit
+// createa new commit that undoes the changes from previous(wrong) commit - safe way to undo
+1. git checkout revert-bad-change
+2. nano demo.txt // add some content
+3. git add demo.txt
+4. git commit -m "put commit messae here"
+5. git checkout main
+6. git merge revert-bad-change
+7. git log --oneline // note/copy commit id
+8. git revert -m 1 id // this for revert from different branch
+9. if you do (2,3,4) in the main/master branch and want to revert commit change do (10)
+10. git revert commit_id
+# Rebase and squash
+// rebase moves your commits to start from latest base; squash combines multiple small commits into one clean commit
+1. git checkout -b feature/clean-update
+2. echo "line A" >> demo.txt
+3. git add demo.txt
+4. git commit-m "feat: add line A"
+5. echo "line B" >> demo.txt
+6. git add demo.txt
+7. git commit-m "fix: add line B"
+8. echo "line C" >> demo.txt
+9. git add demo.txt
+10. git commit-m "chore: add line C"
+11. git rebase -i HEAD~3(last 3 commits calcuated) // It will open 2 text editor one after one, 1st file change 1 squash, 2nd editor create simple one line commit message
+
+
+
